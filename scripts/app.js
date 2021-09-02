@@ -4,14 +4,14 @@ const bookSearch = () => {
     tooggleTotalResults(false);
     tooggleSpinner(true);
     const searchText = document.getElementById('search-input');
-    const url = `http://openlibrary.org/search.json?q=${searchText.value}`;
+    const url = `https://openlibrary.org/search.json?q=${searchText.value}`;
     searchText.value = '';
     fetch(url)
         .then(res => res.json())
         .then(data => {
             if (data.numFound !== 0) {
-                showSearchResult(data.docs.slice(0,30));
-                tooggleTotalResults(true,data.docs.slice(0,30).length,data.numFound);
+                showSearchResult(data.docs.slice(0, 30));
+                tooggleTotalResults(true, data.docs.slice(0, 30).length, data.numFound);
                 // console.log(data.numFound);
                 // console.log(data.docs.length);
             }
@@ -23,41 +23,41 @@ const bookSearch = () => {
         });
 }
 
-const tooggleTotalResults = (value,size = 0,total = 0) => {
+const tooggleTotalResults = (value, size = 0, total = 0) => {
     totalResult = document.getElementById('total-results');
-    if(value){
+    if (value) {
         totalResult.style.display = 'block';
         totalResult.innerText = `Showing ${size} of ${total} results`;
     }
-    else{
+    else {
         totalResult.style.display = 'none';
     }
 }
 
 const tooggleSpinner = (value) => {
     totalResult = document.getElementById('spinner');
-    if(value){
+    if (value) {
         totalResult.classList.remove('d-none');
     }
-    else{
+    else {
         totalResult.classList.add('d-none');
     }
 }
 
 const tooggleWarning = (value) => {
     totalResult = document.getElementById('warning');
-    if(value){
+    if (value) {
         totalResult.style.display = 'block';
         totalResult.innerText = `No search result found. Please search with proper word`;
     }
-    else{
+    else {
         totalResult.style.display = 'none';
     }
 }
 
 const cleanPreviousResults = () => {
     const searchResultsContainer = document.getElementById('search-result-container');
-    var child = searchResultsContainer.lastElementChild; 
+    var child = searchResultsContainer.lastElementChild;
     while (child) {
         searchResultsContainer.removeChild(child);
         child = searchResultsContainer.lastElementChild;
